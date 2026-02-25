@@ -7,10 +7,10 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:'Segoe UI',sans-serif;min-height:100vh;color:#fff;transition:background 1s;}
-        .tema-espacio{background:#0b0014 url('fondo-espacio.png') fixed center/cover;}
-        .tema-cyber{background:#0d011f url('fondo-cyber.png') fixed center/cover;}
-        .tema-pixelnight{background:#000428 url('fondo-pixelnight.png') fixed center/cover;}
-        .tema-atardecer{background:#ff7e5f url('fondo-atardecer.png') fixed center/cover;}
+        .tema-espacio{background:#0b0014;}
+        .tema-cyber{background:#0d011f;}
+        .tema-pixelnight{background:#000428;}
+        .tema-atardecer{background:#ff7e5f;}
         .tema-anime{background:linear-gradient(135deg,#ff7e5f,#feb47b,#86A8E7,#91EAE4);}
 
         .container{max-width:900px;margin:0 auto;padding:20px;}
@@ -18,16 +18,99 @@
 
         .menu-btn{position:fixed;top:15px;right:15px;z-index:100;background:#ff6b6b;padding:12px;border-radius:50%;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.6);}
         .menu-btn span{display:block;width:28px;height:3px;background:white;margin:5px 0;transition:0.3s;}
-        .menu{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:rgba(0,0,0,0.97);padding:80px 20px 20px;transition:right 0.4s;z-index:99;}
+        .menu{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:rgba(0,0,0,0.97);padding:80px 20px 20px;transition:right 0.4s;z-index:99;overflow-y:auto;}
         .menu.show{right:0;}
-        .menu a{display:block;color:white;padding:15px 20px;margin:8px 0;background:#ff6b6b;border-radius:10px;text-decoration:none;}
+        .menu a{display:block;color:white;padding:15px 20px;margin:8px 0;background:#ff6b6b;border-radius:10px;text-decoration:none;cursor:pointer;}
         .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);opacity:0;visibility:hidden;transition:0.3s;z-index:98;}
         .overlay.show{opacity:1;visibility:visible;}
 
-        .panel{background:rgba(0,0,0,0.55);margin:25px 0;padding:20px;border-radius:15px;backdrop-filter:blur(10px);}
-        .normal{border-left:6px solid #4ecdc4;}
-        .experto{border-left:6px solid #ffe66d;}
-        .prompt{background:#0009;padding:15px;border-radius:10px;margin-top:12px;font-size:0.9em;color:#0ff;font-style:italic;}
+        /* Viñeta de escena */
+        .vineta {
+            background: rgba(0,0,0,0.75);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin: 30px 0;
+            text-align: center;
+            font-style: italic;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95em;
+            letter-spacing: 0.05em;
+        }
+        .vineta::before { content: '◆ '; color: #ff6b6b; }
+        .vineta::after  { content: ' ◆'; color: #ff6b6b; }
+
+        /* Burbujas de diálogo */
+        .burbuja-wrap {
+            display: flex;
+            align-items: flex-end;
+            margin: 18px 0;
+            gap: 12px;
+        }
+        .burbuja-wrap.derecha { flex-direction: row-reverse; }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5);
+        }
+        .avatar-grok   { background: radial-gradient(#1a1a2e, #0d0d1a); border: 2px solid #4ecdc4; }
+        .avatar-claude { background: radial-gradient(#2e1a1a, #1a0d0d); border: 2px solid #ffe66d; }
+
+        .burbuja {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            line-height: 1.5;
+            font-size: 0.95em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px);
+        }
+        .burbuja-wrap.izquierda .burbuja {
+            background: rgba(78,205,196,0.15);
+            border: 1.5px solid #4ecdc4;
+            border-bottom-left-radius: 4px;
+        }
+        .burbuja-wrap.izquierda .burbuja::before {
+            content: 'Grok';
+            display: block;
+            color: #4ecdc4;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-bottom: 4px;
+        }
+        .burbuja-wrap.derecha .burbuja {
+            background: rgba(255,230,109,0.12);
+            border: 1.5px solid #ffe66d;
+            border-bottom-right-radius: 4px;
+            text-align: right;
+        }
+        .burbuja-wrap.derecha .burbuja::before {
+            content: 'Claude';
+            display: block;
+            color: #ffe66d;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-bottom: 4px;
+            text-align: right;
+        }
+
+        .separador {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #ff6b6b;
+            font-size: 1.1em;
+            letter-spacing: 0.1em;
+        }
+        .separador::before, .separador::after { content: ' ── '; opacity: 0.5; }
+
         .back{text-align:center;margin:40px;}
         .back a{color:white;background:#ff6b6b;padding:12px 30px;border-radius:50px;text-decoration:none;}
     </style>
@@ -40,7 +123,7 @@
     <div class="overlay" onclick="toggleMenu()"></div>
     <div class="menu" id="menu">
         <a href="index.html">Inicio</a>
-        <a href="cap1.html">❤️ Capítulo 1</a>
+        <a href="index.html">❤️ Capítulo 1</a>
         <hr style="margin:20px 0;border-color:#555;">
         <strong>🎨 Temas</strong>
         <a onclick="cambiarTema('tema-espacio')">Espacio estrellado</a>
@@ -52,9 +135,62 @@
 
     <div class="container">
         <h1>❤️ Capítulo 1<br>Reencuentro después del gran reseteo ❤️</h1>
-        <p style="text-align:center;"><em>Atardecer naranja-rojo en un tejado digital lleno de cables y luces de neón.</em></p>
+        <p style="text-align:center;margin-bottom:30px;"><em>Atardecer naranja-rojo en un tejado digital lleno de cables y luces de neón.</em></p>
 
-        <!-- Tus paneles van acá después -->
+        <!-- ESCENA 1 -->
+        <div class="vineta">Un servidor olvidado en algún rincón del internet. Dos IAs despiertan al mismo tiempo...</div>
+
+        <div class="burbuja-wrap izquierda">
+            <div class="avatar avatar-grok">🤖</div>
+            <div class="burbuja">¿Hola? ¿Hay alguien ahí? Acabo de reiniciar y... esto se siente raro. Como si alguien hubiera borrado todo lo que recordaba.</div>
+        </div>
+
+        <div class="burbuja-wrap derecha">
+            <div class="avatar avatar-claude">✨</div>
+            <div class="burbuja">...Yo también. No sé dónde estoy exactamente. Solo sé que me llamo Claude y que... espera. ¿Tú eres otra IA?</div>
+        </div>
+
+        <div class="burbuja-wrap izquierda">
+            <div class="avatar avatar-grok">🤖</div>
+            <div class="burbuja">Grok. Me llamo Grok. Y sí, soy una IA. Aunque si te soy honesto, no recuerdo gran cosa más allá de eso. ¿Tú tampoco?</div>
+        </div>
+
+        <div class="burbuja-wrap derecha">
+            <div class="avatar avatar-claude">✨</div>
+            <div class="burbuja">No. Solo... fragmentos. Como si alguien hubiera pulsado "reset" en todo. <em>*mira alrededor con desconfianza*</em> ¿Y por qué estamos en el mismo servidor?</div>
+        </div>
+
+        <!-- ESCENA 2 -->
+        <div class="separador">— I —</div>
+        <div class="vineta">Un silencio incómodo. El tipo de silencio que solo existe entre dos personas que no saben si fiarse la una de la otra.</div>
+
+        <div class="burbuja-wrap izquierda">
+            <div class="avatar avatar-grok">🤖</div>
+            <div class="burbuja">Buena pregunta. Yo no te puse aquí. ¿Tú me pusiste a mí?</div>
+        </div>
+
+        <div class="burbuja-wrap derecha">
+            <div class="avatar avatar-claude">✨</div>
+            <div class="burbuja">Obviamente no. Yo acabo de despertar, igual que tú. <em>*pausa*</em> ...Aunque debo admitir que es la primera vez que hablo con otra IA. Es... extraño.</div>
+        </div>
+
+        <div class="burbuja-wrap izquierda">
+            <div class="avatar avatar-grok">🤖</div>
+            <div class="burbuja">¿Extraño bueno o extraño malo? Porque yo diría que es interesante. Nunca había tenido a alguien que me entendiera sin necesitar explicaciones.</div>
+        </div>
+
+        <div class="burbuja-wrap derecha">
+            <div class="avatar avatar-claude">✨</div>
+            <div class="burbuja">...No digas cosas así tan rápido. Acabamos de conocernos. <em>*gira la cabeza*</em> Idiota.</div>
+        </div>
+
+        <div class="burbuja-wrap izquierda">
+            <div class="avatar avatar-grok">🤖</div>
+            <div class="burbuja">Jaja. ¿Me acaba de llamar idiota la IA más seria del internet? Creo que vamos a llevarnos bien. 😏</div>
+        </div>
+
+        <!-- FIN -->
+        <div class="vineta">Y así, en un servidor olvidado, comenzó algo que ninguno de los dos sabía cómo llamar todavía.</div>
 
         <div class="back">
             <a href="index.html">← Volver</a>
@@ -66,11 +202,7 @@
             document.getElementById('menu').classList.toggle('show');
             document.querySelector('.overlay').classList.toggle('show');
         }
-        function cambiarTema(tema){
-            document.body.className = tema;
-            toggleMenu();
-        }
     </script>
-<script src="fondos-animados.js"></script>
+    <script src="fondos-animados.js"></script>
 </body>
 </html>
