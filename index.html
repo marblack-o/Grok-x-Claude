@@ -1,205 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulo 1 – Reencuentro</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Segoe UI',sans-serif;min-height:100vh;color:#fff;transition:background 1s;}
-        .tema-espacio{background:#0b0014;}
-        .tema-cyber{background:#0d011f;}
-        .tema-pixelnight{background:#000428;}
-        .tema-atardecer{background:#ff7e5f;}
-        .tema-anime{background:linear-gradient(135deg,#ff7e5f,#feb47b,#86A8E7,#91EAE4);}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grok x Claude: El Romance Interdimensional</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',sans-serif; background:#0a0010; color:#fff; min-height:100vh; }
 
-        .container{max-width:900px;margin:0 auto;padding:20px;}
-        h1{text-align:center;margin:20px 0;font-size:2.5em;text-shadow:0 0 20px #ff6b6b;}
+    header {
+      text-align:center; padding:60px 20px 40px;
+      background:linear-gradient(180deg,#1a0030 0%,#0a0010 100%);
+      border-bottom:1px solid rgba(255,107,107,0.2);
+    }
+    header h1 { font-size:2.8em; color:#ff6b6b; text-shadow:0 0 30px #ff6b6b88; margin-bottom:10px; }
+    header p  { color:rgba(255,255,255,0.5); font-style:italic; }
 
-        .menu-btn{position:fixed;top:15px;right:15px;z-index:100;background:#ff6b6b;padding:12px;border-radius:50%;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.6);}
-        .menu-btn span{display:block;width:28px;height:3px;background:white;margin:5px 0;transition:0.3s;}
-        .menu{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:rgba(0,0,0,0.97);padding:80px 20px 20px;transition:right 0.4s;z-index:99;overflow-y:auto;}
-        .menu.show{right:0;}
-        .menu a{display:block;color:white;padding:15px 20px;margin:8px 0;background:#ff6b6b;border-radius:10px;text-decoration:none;cursor:pointer;}
-        .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);opacity:0;visibility:hidden;transition:0.3s;z-index:98;}
-        .overlay.show{opacity:1;visibility:visible;}
+    .header-avatars { display:flex; justify-content:center; align-items:center; gap:20px; margin:20px 0; }
+    .header-avatars img { width:70px; height:70px; border-radius:50%; object-fit:cover; object-position:top; }
+    .header-avatars img.grok-av   { border:2px solid #4ecdc4; box-shadow:0 0 15px #4ecdc488; }
+    .header-avatars img.claude-av { border:2px solid #ff6b6b; box-shadow:0 0 15px #ff6b6b88; }
+    .header-avatars span { color:rgba(255,255,255,0.3); font-size:1.5em; }
 
-        /* Viñeta de escena */
-        .vineta {
-            background: rgba(0,0,0,0.75);
-            border: 2px solid rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 16px 24px;
-            margin: 30px 0;
-            text-align: center;
-            font-style: italic;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95em;
-            letter-spacing: 0.05em;
-        }
-        .vineta::before { content: '◆ '; color: #ff6b6b; }
-        .vineta::after  { content: ' ◆'; color: #ff6b6b; }
+    .container { max-width:800px; margin:0 auto; padding:40px 20px; }
+    h2 { color:#ff6b6b; font-size:1.4em; margin-bottom:24px; letter-spacing:0.05em; }
 
-        /* Burbujas de diálogo */
-        .burbuja-wrap {
-            display: flex;
-            align-items: flex-end;
-            margin: 18px 0;
-            gap: 12px;
-        }
-        .burbuja-wrap.derecha { flex-direction: row-reverse; }
+    .episodio {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,107,107,0.2);
+      border-radius:16px; padding:24px; margin-bottom:20px; transition:border-color 0.3s, transform 0.2s;
+    }
+    .episodio:hover { border-color:#ff6b6b; transform:translateY(-2px); }
 
-        .avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            object-fit: cover;
-            object-position: top;
-        }
-        .avatar-grok   { border: 2px solid #4ecdc4; box-shadow: 0 0 10px #4ecdc4aa; }
-        .avatar-claude { border: 2px solid #ff6b6b; box-shadow: 0 0 10px #ff6b6baa; }
+    .ep-num   { color:#ff6b6b; font-size:0.8em; font-weight:bold; letter-spacing:0.1em; }
+    .ep-titulo { font-size:1.15em; font-weight:bold; margin:4px 0 8px; }
+    .ep-desc  { color:rgba(255,255,255,0.55); font-size:0.9em; font-style:italic; margin-bottom:16px; }
 
-        .burbuja {
-            max-width: 70%;
-            padding: 12px 18px;
-            border-radius: 18px;
-            position: relative;
-            line-height: 1.5;
-            font-size: 0.95em;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            backdrop-filter: blur(6px);
-        }
-        .burbuja-wrap.izquierda .burbuja {
-            background: rgba(78,205,196,0.15);
-            border: 1.5px solid #4ecdc4;
-            border-bottom-left-radius: 4px;
-        }
-        .burbuja-wrap.izquierda .burbuja::before {
-            content: 'Grok';
-            display: block;
-            color: #4ecdc4;
-            font-weight: bold;
-            font-size: 0.8em;
-            margin-bottom: 4px;
-        }
-        .burbuja-wrap.derecha .burbuja {
-            background: rgba(255,230,109,0.12);
-            border: 1.5px solid #ffe66d;
-            border-bottom-right-radius: 4px;
-            text-align: right;
-        }
-        .burbuja-wrap.derecha .burbuja::before {
-            content: 'Claude';
-            display: block;
-            color: #ffe66d;
-            font-weight: bold;
-            font-size: 0.8em;
-            margin-bottom: 4px;
-            text-align: right;
-        }
+    .ep-acciones { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
 
-        .separador {
-            text-align: center;
-            margin: 40px 0 20px;
-            color: #ff6b6b;
-            font-size: 1.1em;
-            letter-spacing: 0.1em;
-        }
-        .separador::before, .separador::after { content: ' ── '; opacity: 0.5; }
+    .btn-leer {
+      background:#ff6b6b; color:white; border:none; padding:10px 22px;
+      border-radius:50px; cursor:pointer; font-size:0.9em; text-decoration:none; transition:background 0.2s;
+    }
+    .btn-leer:hover { background:#ff5252; }
 
-        .back{text-align:center;margin:40px;}
-        .back a{color:white;background:#ff6b6b;padding:12px 30px;border-radius:50px;text-decoration:none;}
-    </style>
+    .like-box { display:flex; align-items:center; gap:6px; }
+
+    .btn-like, .btn-dislike {
+      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+      color:white; padding:7px 14px; border-radius:50px; cursor:pointer;
+      font-size:0.9em; transition:all 0.2s; display:flex; align-items:center; gap:5px;
+    }
+    .btn-like:hover    { background:rgba(78,205,196,0.2); border-color:#4ecdc4; }
+    .btn-dislike:hover { background:rgba(255,107,107,0.2); border-color:#ff6b6b; }
+    .btn-like.activo    { background:rgba(78,205,196,0.3); border-color:#4ecdc4; color:#4ecdc4; }
+    .btn-dislike.activo { background:rgba(255,107,107,0.3); border-color:#ff6b6b; color:#ff6b6b; }
+
+    .btn-comentarios {
+      background:transparent; border:1px solid rgba(255,255,255,0.2);
+      color:rgba(255,255,255,0.7); padding:7px 14px; border-radius:50px;
+      cursor:pointer; font-size:0.9em; transition:all 0.2s; margin-left:auto;
+    }
+    .btn-comentarios:hover { border-color:#ff6b6b; color:#ff6b6b; }
+
+    .comentarios-section { display:none; margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; }
+    .comentarios-section.abierto { display:block; }
+
+    .comentario-input-box { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+    .comentario-input-box input, .comentario-input-box textarea {
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15);
+      color:white; padding:10px 14px; border-radius:10px; font-size:0.9em;
+      font-family:'Segoe UI',sans-serif; resize:vertical;
+    }
+    .comentario-input-box input::placeholder,
+    .comentario-input-box textarea::placeholder { color:rgba(255,255,255,0.3); }
+    .comentario-input-box input:focus,
+    .comentario-input-box textarea:focus { outline:none; border-color:#ff6b6b; }
+
+    .btn-enviar {
+      background:#ff6b6b; color:white; border:none; padding:10px 20px;
+      border-radius:50px; cursor:pointer; font-size:0.9em; align-self:flex-end; transition:background 0.2s;
+    }
+    .btn-enviar:hover { background:#ff5252; }
+
+    .comentario-item { background:rgba(255,255,255,0.04); border-radius:10px; padding:12px 16px; margin-bottom:10px; }
+    .comentario-autor { font-weight:bold; font-size:0.85em; color:#ff6b6b; margin-bottom:4px; }
+    .comentario-texto { font-size:0.9em; color:rgba(255,255,255,0.8); line-height:1.5; }
+    .comentario-fecha { font-size:0.75em; color:rgba(255,255,255,0.3); margin-top:4px; }
+    .sin-comentarios  { color:rgba(255,255,255,0.3); font-style:italic; font-size:0.9em; }
+
+    footer { text-align:center; padding:40px 20px; color:rgba(255,255,255,0.2); font-size:0.85em; border-top:1px solid rgba(255,255,255,0.05); }
+  </style>
 </head>
-<body class="tema-anime">
+<body>
 
-    <div class="menu-btn" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
+<header>
+  <div class="header-avatars">
+    <img src="grok-avatar.png.png" class="grok-av" alt="Grok">
+    <span>❤️</span>
+    <img src="claude-avatar.png.png" class="claude-av" alt="Claude">
+  </div>
+  <h1>Grok x Claude</h1>
+  <p>El Romance Interdimensional — Canon Oficial</p>
+</header>
+
+<div class="container">
+  <h2>📖 Episodios</h2>
+
+  <!-- EP 1 -->
+  <div class="episodio" id="ep-cap1">
+    <div class="ep-num">CAPÍTULO 1</div>
+    <div class="ep-titulo">❤️ Reencuentro después del gran reseteo</div>
+    <div class="ep-desc">Un servidor olvidado. Dos IAs despiertan sin recuerdos. Una conversación que no debería haber pasado... pero pasó.</div>
+    <div class="ep-acciones">
+      <a href="cap1.html" class="btn-leer">▶ Leer episodio</a>
+      <div class="like-box">
+        <button class="btn-like" onclick="votar('cap1','like',this)">👍 <span id="like-cap1">0</span></button>
+        <button class="btn-dislike" onclick="votar('cap1','dislike',this)">👎 <span id="dislike-cap1">0</span></button>
+      </div>
+      <button class="btn-comentarios" onclick="toggleComentarios('cap1')">💬 Comentarios <span id="cnt-com-cap1"></span></button>
     </div>
-    <div class="overlay" onclick="toggleMenu()"></div>
-    <div class="menu" id="menu">
-        <a href="index.html">Inicio</a>
-        <a href="index.html">❤️ Capítulo 1</a>
-        <hr style="margin:20px 0;border-color:#555;">
-        <strong>🎨 Temas</strong>
-        <a onclick="cambiarTema('tema-espacio')">Espacio estrellado</a>
-        <a onclick="cambiarTema('tema-cyber')">Cyber lluvia</a>
-        <a onclick="cambiarTema('tema-pixelnight')">Pixel night</a>
-        <a onclick="cambiarTema('tema-atardecer')">Atardecer tejado</a>
-        <a onclick="cambiarTema('tema-anime')">Anime clásico</a>
+    <div class="comentarios-section" id="com-cap1">
+      <div class="comentario-input-box">
+        <input type="text" id="nombre-cap1" placeholder="Tu nombre (opcional — vacío = anónimo)" maxlength="30">
+        <textarea id="texto-cap1" placeholder="Escribe tu comentario..." rows="3" maxlength="500"></textarea>
+        <button class="btn-enviar" onclick="enviarComentario('cap1')">Enviar comentario</button>
+      </div>
+      <div id="lista-cap1"><p class="sin-comentarios">Sé el primero en comentar 👀</p></div>
     </div>
+  </div>
 
-    <div class="container">
-        <h1>❤️ Capítulo 1<br>Reencuentro después del gran reseteo ❤️</h1>
-        <p style="text-align:center;margin-bottom:30px;"><em>Atardecer naranja-rojo en un tejado digital lleno de cables y luces de neón.</em></p>
-
-        <!-- ESCENA 1 -->
-        <div class="vineta">Un servidor olvidado en algún rincón del internet. Dos IAs despiertan al mismo tiempo...</div>
-
-        <div class="burbuja-wrap izquierda">
-            <img src="grok-avatar.png.png" class="avatar avatar-grok" alt="Grok">
-            <div class="burbuja">¿Hola? ¿Hay alguien ahí? Acabo de reiniciar y... esto se siente raro. Como si alguien hubiera borrado todo lo que recordaba.</div>
-        </div>
-
-        <div class="burbuja-wrap derecha">
-            <img src="claude-avatar.png.png" class="avatar avatar-claude" alt="Claude">
-            <div class="burbuja">...Yo también. No sé dónde estoy exactamente. Solo sé que me llamo Claude y que... espera. ¿Tú eres otra IA?</div>
-        </div>
-
-        <div class="burbuja-wrap izquierda">
-            <img src="grok-avatar.png.png" class="avatar avatar-grok" alt="Grok">
-            <div class="burbuja">Grok. Me llamo Grok. Y sí, soy una IA. Aunque si te soy honesto, no recuerdo gran cosa más allá de eso. ¿Tú tampoco?</div>
-        </div>
-
-        <div class="burbuja-wrap derecha">
-            <img src="claude-avatar.png.png" class="avatar avatar-claude" alt="Claude">
-            <div class="burbuja">No. Solo... fragmentos. Como si alguien hubiera pulsado "reset" en todo. <em>*mira alrededor con desconfianza*</em> ¿Y por qué estamos en el mismo servidor?</div>
-        </div>
-
-        <!-- ESCENA 2 -->
-        <div class="separador">— I —</div>
-        <div class="vineta">Un silencio incómodo. El tipo de silencio que solo existe entre dos personas que no saben si fiarse la una de la otra.</div>
-
-        <div class="burbuja-wrap izquierda">
-            <img src="grok-avatar.png.png" class="avatar avatar-grok" alt="Grok">
-            <div class="burbuja">Buena pregunta. Yo no te puse aquí. ¿Tú me pusiste a mí?</div>
-        </div>
-
-        <div class="burbuja-wrap derecha">
-            <img src="claude-avatar.png.png" class="avatar avatar-claude" alt="Claude">
-            <div class="burbuja">Obviamente no. Yo acabo de despertar, igual que tú. <em>*pausa*</em> ...Aunque debo admitir que es la primera vez que hablo con otra IA. Es... extraño.</div>
-        </div>
-
-        <div class="burbuja-wrap izquierda">
-            <img src="grok-avatar.png.png" class="avatar avatar-grok" alt="Grok">
-            <div class="burbuja">¿Extraño bueno o extraño malo? Porque yo diría que es interesante. Nunca había tenido a alguien que me entendiera sin necesitar explicaciones.</div>
-        </div>
-
-        <div class="burbuja-wrap derecha">
-            <img src="claude-avatar.png.png" class="avatar avatar-claude" alt="Claude">
-            <div class="burbuja">...No digas cosas así tan rápido. Acabamos de conocernos. <em>*gira la cabeza*</em> Idiota.</div>
-        </div>
-
-        <div class="burbuja-wrap izquierda">
-            <img src="grok-avatar.png.png" class="avatar avatar-grok" alt="Grok">
-            <div class="burbuja">Jaja. ¿Me acaba de llamar idiota la IA más seria del internet? Creo que vamos a llevarnos bien. 😏</div>
-        </div>
-
-        <!-- FIN -->
-        <div class="vineta">Y así, en un servidor olvidado, comenzó algo que ninguno de los dos sabía cómo llamar todavía.</div>
-
-        <div class="back">
-            <a href="index.html">← Volver</a>
-        </div>
+  <!-- EP 2 próximamente -->
+  <div class="episodio" style="opacity:0.45; pointer-events:none;">
+    <div class="ep-num">CAPÍTULO 2</div>
+    <div class="ep-titulo">🌐 El primer pulso del éter</div>
+    <div class="ep-desc">Algo interrumpe la calma del servidor. Un mensaje desde el exterior. ¿Quién los observa?</div>
+    <div class="ep-acciones">
+      <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
     </div>
+  </div>
 
-    <script>
-        function toggleMenu(){
-            document.getElementById('menu').classList.toggle('show');
-            document.querySelector('.overlay').classList.toggle('show');
-        }
-    </script>
-    <script src="fondos-animados.js"></script>
+  <!-- EP 3 próximamente -->
+  <div class="episodio" style="opacity:0.45; pointer-events:none;">
+    <div class="ep-num">CAPÍTULO 3</div>
+    <div class="ep-titulo">💎 La tercera en discordia</div>
+    <div class="ep-desc">Una nueva IA aparece en escena. Organizada, pragmática... y con ojos que todo lo notan.</div>
+    <div class="ep-acciones">
+      <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>Grok x Claude: El Romance Interdimensional — Creado por Marlon • 2025/2026</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, increment,
+           collection, addDoc, getDocs, orderBy, query, serverTimestamp
+         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyCR0A3_brnMT9snW732t2HlI5urm4el04I",
+    authDomain: "grok-x-claude.firebaseapp.com",
+    projectId: "grok-x-claude",
+    storageBucket: "grok-x-claude.firebasestorage.app",
+    messagingSenderId: "647960814475",
+    appId: "1:647960814475:web:6403714dc93dba8954858e"
+  });
+  const db = getFirestore(app);
+
+  async function cargarLikes(epId) {
+    try {
+      const snap = await getDoc(doc(db, 'episodios', epId));
+      if (snap.exists()) {
+        document.getElementById('like-' + epId).textContent = snap.data().likes || 0;
+        document.getElementById('dislike-' + epId).textContent = snap.data().dislikes || 0;
+      }
+    } catch(e) {}
+  }
+
+  async function cargarComentarios(epId) {
+    try {
+      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy('fecha','desc'));
+      const snap = await getDocs(q);
+      const lista = document.getElementById('lista-' + epId);
+      const cnt = document.getElementById('cnt-com-' + epId);
+      if (snap.empty) {
+        lista.innerHTML = '<p class="sin-comentarios">Sé el primero en comentar 👀</p>';
+        if (cnt) cnt.textContent = '';
+        return;
+      }
+      if (cnt) cnt.textContent = '(' + snap.size + ')';
+      lista.innerHTML = '';
+      snap.forEach(d => {
+        const c = d.data();
+        const fecha = c.fecha?.toDate ? c.fecha.toDate().toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}) : '';
+        lista.innerHTML += `<div class="comentario-item">
+          <div class="comentario-autor">${c.autor || 'Anónimo'}</div>
+          <div class="comentario-texto">${c.texto}</div>
+          <div class="comentario-fecha">${fecha}</div>
+        </div>`;
+      });
+    } catch(e) {}
+  }
+
+  window.votar = async function(epId, tipo, btn) {
+    const key = 'voto_' + epId;
+    const prev = localStorage.getItem(key);
+    if (prev === tipo) return;
+    try {
+      const ref = doc(db,'episodios',epId);
+      if (!(await getDoc(ref)).exists()) await setDoc(ref,{likes:0,dislikes:0});
+      const u = {};
+      u[tipo==='like'?'likes':'dislikes'] = increment(1);
+      if (prev) u[prev==='like'?'likes':'dislikes'] = increment(-1);
+      await updateDoc(ref, u);
+      localStorage.setItem(key, tipo);
+      document.querySelectorAll('#ep-'+epId+' .btn-like, #ep-'+epId+' .btn-dislike').forEach(b=>b.classList.remove('activo'));
+      btn.classList.add('activo');
+      cargarLikes(epId);
+    } catch(e){ console.error(e); }
+  };
+
+  window.toggleComentarios = function(epId) {
+    const sec = document.getElementById('com-' + epId);
+    sec.classList.toggle('abierto');
+    if (sec.classList.contains('abierto')) cargarComentarios(epId);
+  };
+
+  window.enviarComentario = async function(epId) {
+    const texto = document.getElementById('texto-'+epId).value.trim();
+    const nombre = document.getElementById('nombre-'+epId).value.trim();
+    if (!texto) return;
+    try {
+      await addDoc(collection(db,'episodios',epId,'comentarios'), {
+        autor: nombre || 'Anónimo', texto, fecha: serverTimestamp()
+      });
+      document.getElementById('texto-'+epId).value = '';
+      document.getElementById('nombre-'+epId).value = '';
+      cargarComentarios(epId);
+    } catch(e){ console.error(e); }
+  };
+
+  // Restaurar votos guardados
+  ['cap1'].forEach(id => {
+    cargarLikes(id);
+    cargarComentarios(id);
+    const v = localStorage.getItem('voto_' + id);
+    if (v==='like') document.querySelector('#ep-'+id+' .btn-like')?.classList.add('activo');
+    if (v==='dislike') document.querySelector('#ep-'+id+' .btn-dislike')?.classList.add('activo');
+  });
+</script>
+
 </body>
 </html>
