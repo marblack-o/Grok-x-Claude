@@ -25,6 +25,19 @@
     .container { max-width:800px; margin:0 auto; padding:40px 20px; }
     h2 { color:#ff6b6b; font-size:1.4em; margin-bottom:24px; letter-spacing:0.05em; }
 
+    /* BANNER INTERACTIVO */
+    .banner-interactivo {
+      background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(78,205,196,0.1));
+      border: 1px solid rgba(255,107,107,0.3);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 0.9em;
+      color: rgba(255,255,255,0.8);
+    }
+    .banner-interactivo strong { color: #ff6b6b; }
+
     .episodio {
       background:rgba(255,255,255,0.04); border:1px solid rgba(255,107,107,0.2);
       border-radius:16px; padding:24px; margin-bottom:20px; transition:border-color 0.3s, transform 0.2s;
@@ -44,7 +57,6 @@
     .btn-leer:hover { background:#ff5252; }
 
     .like-box { display:flex; align-items:center; gap:6px; }
-
     .btn-like, .btn-dislike {
       background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
       color:white; padding:7px 14px; border-radius:50px; cursor:pointer;
@@ -62,6 +74,7 @@
     }
     .btn-comentarios:hover { border-color:#ff6b6b; color:#ff6b6b; }
 
+    /* COMENTARIOS */
     .comentarios-section { display:none; margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; }
     .comentarios-section.abierto { display:block; }
 
@@ -81,12 +94,44 @@
       border-radius:50px; cursor:pointer; font-size:0.9em; align-self:flex-end; transition:background 0.2s;
     }
     .btn-enviar:hover { background:#ff5252; }
+    .btn-enviar:disabled { background:#555; cursor:not-allowed; }
 
-    .comentario-item { background:rgba(255,255,255,0.04); border-radius:10px; padding:12px 16px; margin-bottom:10px; }
-    .comentario-autor { font-weight:bold; font-size:0.85em; color:#ff6b6b; margin-bottom:4px; }
+    /* COMENTARIO INDIVIDUAL */
+    .comentario-item {
+      background:rgba(255,255,255,0.04); border-radius:10px;
+      padding:12px 16px; margin-bottom:10px;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .comentario-top { display:flex; justify-content:space-between; align-items:center; }
+    .comentario-autor { font-weight:bold; font-size:0.85em; color:#ff6b6b; }
+    .comentario-fecha { font-size:0.75em; color:rgba(255,255,255,0.3); }
     .comentario-texto { font-size:0.9em; color:rgba(255,255,255,0.8); line-height:1.5; }
-    .comentario-fecha { font-size:0.75em; color:rgba(255,255,255,0.3); margin-top:4px; }
-    .sin-comentarios  { color:rgba(255,255,255,0.3); font-style:italic; font-size:0.9em; }
+    .comentario-acciones { display:flex; align-items:center; gap:8px; margin-top:4px; }
+
+    .btn-like-com {
+      background:transparent; border:1px solid rgba(255,255,255,0.15);
+      color:rgba(255,255,255,0.5); padding:4px 10px; border-radius:50px;
+      cursor:pointer; font-size:0.8em; transition:all 0.2s; display:flex; align-items:center; gap:4px;
+    }
+    .btn-like-com:hover  { border-color:#ff6b6b; color:#ff6b6b; }
+    .btn-like-com.activo { border-color:#ff6b6b; color:#ff6b6b; background:rgba(255,107,107,0.15); }
+
+    .top-badge {
+      font-size:0.75em; background:rgba(255,107,107,0.2); border:1px solid #ff6b6b;
+      color:#ff6b6b; padding:2px 8px; border-radius:50px;
+    }
+
+    .sin-comentarios { color:rgba(255,255,255,0.3); font-style:italic; font-size:0.9em; }
+    .cargando { color:rgba(255,255,255,0.3); font-size:0.9em; font-style:italic; }
+
+    /* ORDEN DE COMENTARIOS */
+    .orden-btn-box { display:flex; gap:8px; margin-bottom:14px; }
+    .orden-btn {
+      background:transparent; border:1px solid rgba(255,255,255,0.15);
+      color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:50px;
+      cursor:pointer; font-size:0.8em; transition:all 0.2s;
+    }
+    .orden-btn.activo { border-color:#ff6b6b; color:#ff6b6b; }
 
     footer { text-align:center; padding:40px 20px; color:rgba(255,255,255,0.2); font-size:0.85em; border-top:1px solid rgba(255,255,255,0.05); }
   </style>
@@ -104,6 +149,11 @@
 </header>
 
 <div class="container">
+
+  <div class="banner-interactivo">
+    💬 <strong>¡Tu comentario puede volverse canon!</strong> Los comentarios con más likes serán implementados como ideas o retos en el cómic.
+  </div>
+
   <h2>📖 Episodios</h2>
 
   <!-- EP 1 -->
@@ -114,18 +164,22 @@
     <div class="ep-acciones">
       <a href="cap1.html" class="btn-leer">▶ Leer episodio</a>
       <div class="like-box">
-        <button class="btn-like" onclick="votar('cap1','like',this)">👍 <span id="like-cap1">0</span></button>
-        <button class="btn-dislike" onclick="votar('cap1','dislike',this)">👎 <span id="dislike-cap1">0</span></button>
+        <button class="btn-like" onclick="votar('cap1','like',this)">👍 <span id="like-cap1">–</span></button>
+        <button class="btn-dislike" onclick="votar('cap1','dislike',this)">👎 <span id="dislike-cap1">–</span></button>
       </div>
       <button class="btn-comentarios" onclick="toggleComentarios('cap1')">💬 Comentarios <span id="cnt-com-cap1"></span></button>
     </div>
     <div class="comentarios-section" id="com-cap1">
       <div class="comentario-input-box">
-        <input type="text" id="nombre-cap1" placeholder="Tu nombre (opcional — vacío = anónimo)" maxlength="30">
-        <textarea id="texto-cap1" placeholder="Escribe tu comentario..." rows="3" maxlength="500"></textarea>
-        <button class="btn-enviar" onclick="enviarComentario('cap1')">Enviar comentario</button>
+        <input type="text" id="nombre-cap1" placeholder="Tu nombre o apodo (obligatorio)" maxlength="30">
+        <textarea id="texto-cap1" placeholder="Escribe tu comentario... recuerda que los mejores se vuelven canon 👀" rows="3" maxlength="500"></textarea>
+        <button class="btn-enviar" id="btn-enviar-cap1" onclick="enviarComentario('cap1')">Enviar comentario</button>
       </div>
-      <div id="lista-cap1"><p class="sin-comentarios">Sé el primero en comentar 👀</p></div>
+      <div class="orden-btn-box">
+        <button class="orden-btn activo" onclick="cambiarOrden('cap1','likes',this)">🔥 Más likes</button>
+        <button class="orden-btn" onclick="cambiarOrden('cap1','recientes',this)">🕐 Más recientes</button>
+      </div>
+      <div id="lista-cap1"><p class="cargando">Cargando comentarios...</p></div>
     </div>
   </div>
 
@@ -155,9 +209,11 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, updateDoc, increment,
-           collection, addDoc, getDocs, orderBy, query, serverTimestamp
-         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+           collection, addDoc, getDocs, orderBy, query, serverTimestamp, where }
+    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const app = initializeApp({
     apiKey: "AIzaSyCR0A3_brnMT9snW732t2HlI5urm4el04I",
@@ -167,24 +223,84 @@
     messagingSenderId: "647960814475",
     appId: "1:647960814475:web:6403714dc93dba8954858e"
   });
-  const db = getFirestore(app);
 
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  let uid = null;
+  let ordenActual = { cap1: 'likes' };
+
+  // Auth anónima — ID único por dispositivo
+  signInAnonymously(auth).catch(console.error);
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      uid = user.uid;
+      ['cap1'].forEach(id => {
+        cargarLikes(id);
+        cargarVotoGuardado(id);
+      });
+    }
+  });
+
+  // ─── LIKES DE CAPÍTULO ────────────────────────────────────────
   async function cargarLikes(epId) {
     try {
       const snap = await getDoc(doc(db, 'episodios', epId));
       if (snap.exists()) {
-        document.getElementById('like-' + epId).textContent = snap.data().likes || 0;
+        document.getElementById('like-' + epId).textContent    = snap.data().likes    || 0;
         document.getElementById('dislike-' + epId).textContent = snap.data().dislikes || 0;
+      } else {
+        document.getElementById('like-' + epId).textContent    = 0;
+        document.getElementById('dislike-' + epId).textContent = 0;
       }
     } catch(e) {}
   }
 
-  async function cargarComentarios(epId) {
+  async function cargarVotoGuardado(epId) {
+    if (!uid) return;
     try {
-      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy('fecha','desc'));
+      const snap = await getDoc(doc(db, 'votos', uid + '_' + epId));
+      if (snap.exists()) {
+        const v = snap.data().tipo;
+        document.querySelector('#ep-' + epId + ' .btn-' + v)?.classList.add('activo');
+      }
+    } catch(e) {}
+  }
+
+  window.votar = async function(epId, tipo, btn) {
+    if (!uid) return;
+    const votoRef = doc(db, 'votos', uid + '_' + epId);
+    try {
+      const snap = await getDoc(votoRef);
+      const prev = snap.exists() ? snap.data().tipo : null;
+      if (prev === tipo) {
+        // Quitar voto (toggle)
+        await updateDoc(doc(db,'episodios',epId), { [tipo==='like'?'likes':'dislikes']: increment(-1) });
+        await setDoc(votoRef, { tipo: null });
+        btn.classList.remove('activo');
+      } else {
+        const epRef = doc(db,'episodios',epId);
+        if (!(await getDoc(epRef)).exists()) await setDoc(epRef, {likes:0,dislikes:0});
+        const u = { [tipo==='like'?'likes':'dislikes']: increment(1) };
+        if (prev) u[prev==='like'?'likes':'dislikes'] = increment(-1);
+        await updateDoc(epRef, u);
+        await setDoc(votoRef, { tipo });
+        document.querySelectorAll('#ep-'+epId+' .btn-like, #ep-'+epId+' .btn-dislike').forEach(b=>b.classList.remove('activo'));
+        btn.classList.add('activo');
+      }
+      cargarLikes(epId);
+    } catch(e){ console.error(e); }
+  };
+
+  // ─── COMENTARIOS ──────────────────────────────────────────────
+  async function cargarComentarios(epId) {
+    const lista  = document.getElementById('lista-' + epId);
+    const cnt    = document.getElementById('cnt-com-' + epId);
+    const orden  = ordenActual[epId] || 'likes';
+    lista.innerHTML = '<p class="cargando">Cargando...</p>';
+    try {
+      const ordenField = orden === 'likes' ? 'likes' : 'fecha';
+      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy(ordenField,'desc'));
       const snap = await getDocs(q);
-      const lista = document.getElementById('lista-' + epId);
-      const cnt = document.getElementById('cnt-com-' + epId);
       if (snap.empty) {
         lista.innerHTML = '<p class="sin-comentarios">Sé el primero en comentar 👀</p>';
         if (cnt) cnt.textContent = '';
@@ -192,35 +308,41 @@
       }
       if (cnt) cnt.textContent = '(' + snap.size + ')';
       lista.innerHTML = '';
-      snap.forEach(d => {
+      let i = 0;
+      for (const d of snap.docs) {
         const c = d.data();
+        const comId = d.id;
         const fecha = c.fecha?.toDate ? c.fecha.toDate().toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}) : '';
-        lista.innerHTML += `<div class="comentario-item">
-          <div class="comentario-autor">${c.autor || 'Anónimo'}</div>
-          <div class="comentario-texto">${c.texto}</div>
-          <div class="comentario-fecha">${fecha}</div>
-        </div>`;
-      });
-    } catch(e) {}
-  }
+        const likesCount = c.likes || 0;
+        const esTop = i === 0 && likesCount > 0 && orden === 'likes';
 
-  window.votar = async function(epId, tipo, btn) {
-    const key = 'voto_' + epId;
-    const prev = localStorage.getItem(key);
-    if (prev === tipo) return;
-    try {
-      const ref = doc(db,'episodios',epId);
-      if (!(await getDoc(ref)).exists()) await setDoc(ref,{likes:0,dislikes:0});
-      const u = {};
-      u[tipo==='like'?'likes':'dislikes'] = increment(1);
-      if (prev) u[prev==='like'?'likes':'dislikes'] = increment(-1);
-      await updateDoc(ref, u);
-      localStorage.setItem(key, tipo);
-      document.querySelectorAll('#ep-'+epId+' .btn-like, #ep-'+epId+' .btn-dislike').forEach(b=>b.classList.remove('activo'));
-      btn.classList.add('activo');
-      cargarLikes(epId);
-    } catch(e){ console.error(e); }
-  };
+        // Verificar si el usuario ya dio like a este comentario
+        let yaLike = false;
+        if (uid) {
+          try {
+            const likeSnap = await getDoc(doc(db,'likesComentarios', uid + '_' + comId));
+            yaLike = likeSnap.exists();
+          } catch(e) {}
+        }
+
+        lista.innerHTML += `
+          <div class="comentario-item" id="com-item-${comId}">
+            <div class="comentario-top">
+              <span class="comentario-autor">${escapeHtml(c.autor)}</span>
+              <span class="comentario-fecha">${fecha}</span>
+            </div>
+            <div class="comentario-texto">${escapeHtml(c.texto)}</div>
+            <div class="comentario-acciones">
+              <button class="btn-like-com ${yaLike?'activo':''}" onclick="likeComentario('${epId}','${comId}',this)">
+                ❤️ <span id="lc-${comId}">${likesCount}</span>
+              </button>
+              ${esTop ? '<span class="top-badge">⭐ Top comentario</span>' : ''}
+            </div>
+          </div>`;
+        i++;
+      }
+    } catch(e){ lista.innerHTML = '<p class="sin-comentarios">Error cargando comentarios.</p>'; }
+  }
 
   window.toggleComentarios = function(epId) {
     const sec = document.getElementById('com-' + epId);
@@ -228,28 +350,61 @@
     if (sec.classList.contains('abierto')) cargarComentarios(epId);
   };
 
+  window.cambiarOrden = function(epId, orden, btn) {
+    ordenActual[epId] = orden;
+    document.querySelectorAll('#com-'+epId+' .orden-btn').forEach(b=>b.classList.remove('activo'));
+    btn.classList.add('activo');
+    cargarComentarios(epId);
+  };
+
   window.enviarComentario = async function(epId) {
-    const texto = document.getElementById('texto-'+epId).value.trim();
-    const nombre = document.getElementById('nombre-'+epId).value.trim();
-    if (!texto) return;
+    const texto  = document.getElementById('texto-'  + epId).value.trim();
+    const nombre = document.getElementById('nombre-' + epId).value.trim();
+    if (!texto)  { alert('Escribe un comentario primero.'); return; }
+    if (!nombre) { alert('Escribe tu nombre o apodo para comentar.'); return; }
+    if (!uid)    { alert('Espera un momento e intenta de nuevo.'); return; }
+
+    const btn = document.getElementById('btn-enviar-' + epId);
+    btn.disabled = true; btn.textContent = 'Enviando...';
     try {
       await addDoc(collection(db,'episodios',epId,'comentarios'), {
-        autor: nombre || 'Anónimo', texto, fecha: serverTimestamp()
+        autor: nombre, texto, fecha: serverTimestamp(), likes: 0, uid
       });
-      document.getElementById('texto-'+epId).value = '';
-      document.getElementById('nombre-'+epId).value = '';
+      document.getElementById('texto-'  + epId).value = '';
+      document.getElementById('nombre-' + epId).value = '';
       cargarComentarios(epId);
+    } catch(e){ console.error(e); }
+    btn.disabled = false; btn.textContent = 'Enviar comentario';
+  };
+
+  window.likeComentario = async function(epId, comId, btn) {
+    if (!uid) return;
+    const likeRef = doc(db,'likesComentarios', uid + '_' + comId);
+    const comRef  = doc(db,'episodios',epId,'comentarios',comId);
+    try {
+      const snap = await getDoc(likeRef);
+      if (snap.exists()) {
+        // Quitar like
+        await updateDoc(comRef, { likes: increment(-1) });
+        await setDoc(likeRef, { activo: false }); // marcamos como quitado
+        btn.classList.remove('activo');
+        const span = document.getElementById('lc-' + comId);
+        if (span) span.textContent = Math.max(0, parseInt(span.textContent) - 1);
+        // Borrar doc de like para poder dar like de nuevo
+        await setDoc(likeRef, {});
+      } else {
+        await updateDoc(comRef, { likes: increment(1) });
+        await setDoc(likeRef, { uid, comId, epId });
+        btn.classList.add('activo');
+        const span = document.getElementById('lc-' + comId);
+        if (span) span.textContent = parseInt(span.textContent) + 1;
+      }
     } catch(e){ console.error(e); }
   };
 
-  // Restaurar votos guardados
-  ['cap1'].forEach(id => {
-    cargarLikes(id);
-    cargarComentarios(id);
-    const v = localStorage.getItem('voto_' + id);
-    if (v==='like') document.querySelector('#ep-'+id+' .btn-like')?.classList.add('activo');
-    if (v==='dislike') document.querySelector('#ep-'+id+' .btn-dislike')?.classList.add('activo');
-  });
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 </script>
 
 </body>
