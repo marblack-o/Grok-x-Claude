@@ -120,7 +120,7 @@
     .admin-fab {
       display:none; position:fixed; bottom:24px; right:24px; z-index:999;
       background:#ff6b6b; color:white; border:none; width:50px; height:50px;
-      border-radius:50%; font-size:1.4em; cursor:pointer;
+      border-radius:50%; font-size:1.2em; cursor:pointer; align-items:center; justify-content:center;
       box-shadow:0 4px 20px rgba(255,107,107,0.6); transition:transform 0.2s;
     }
     .admin-fab:hover { transform:scale(1.1); }
@@ -356,6 +356,42 @@
     ['cap1'].forEach(id => { cargarLikes(id); cargarVotoGuardado(id); });
   });
 
+  // Cargar config de episodios desde Firestore al iniciar
+  async function cargarConfig() {
+    try {
+      const snap = await getDoc(doc(db,'config','episodios'));
+      if (!snap.exists()) return;
+      const data = snap.data();
+      ['cap1','cap2','cap3'].forEach(epId => {
+        if (!data[epId]) return;
+        const { titulo, desc, estado, link } = data[epId];
+        const card = document.getElementById('ep-'+epId);
+        if (!card) return;
+        if (titulo) card.querySelector('.ep-titulo').textContent = titulo;
+        if (desc)   card.querySelector('.ep-desc').textContent   = desc;
+        if (estado === 'activo') {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          const btnLeer = card.querySelector('a.btn-leer, button.btn-leer');
+          if (btnLeer && link) { btnLeer.href = link; btnLeer.textContent = '▶ Leer episodio'; btnLeer.style.background = '#ff6b6b'; }
+        } else {
+          card.style.opacity = '0.45';
+          card.style.pointerEvents = 'none';
+        }
+        // Actualizar valores en el panel admin también
+        const tEl = document.getElementById('admin-titulo-'+epId);
+        const dEl = document.getElementById('admin-desc-'+epId);
+        const sEl = document.getElementById('admin-estado-'+epId);
+        const lEl = document.getElementById('admin-link-'+epId);
+        if (tEl && titulo) tEl.value = titulo;
+        if (dEl && desc)   dEl.value = desc;
+        if (sEl && estado) sEl.value = estado;
+        if (lEl && link)   lEl.value = link;
+      });
+    } catch(e){}
+  }
+  cargarConfig();
+
   // ── LIKES CAPÍTULO ────────────────────────
   async function cargarLikes(epId) {
     try {
@@ -583,9 +619,3 @@
 </script>
 </body>
 </html>
-<script type="module">
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  const auth = getAuth(getApp());
-  onAuthStateChanged(auth, u => { if(u) alert('Tu UID: ' + u.uid) });
-</script>
