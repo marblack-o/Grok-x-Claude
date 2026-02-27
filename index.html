@@ -379,26 +379,29 @@
 
   window.likeComentario = async function(epId, comId, btn) {
     if (!uid) return;
-    const likeRef = doc(db,'likesComentarios', uid + '_' + comId);
-    const comRef  = doc(db,'episodios',epId,'comentarios',comId);
+    const likeRef = doc(db, 'likesComentarios', uid + '_' + comId);
+    const comRef  = doc(db, 'episodios', epId, 'comentarios', comId);
     try {
-      const snap = await getDoc(likeRef);
+      const snap   = await getDoc(likeRef);
       const yaLike = snap.exists() && snap.data().activo === true;
-      const span = document.getElementById('lc-' + comId);
+
       if (yaLike) {
-        // Quitar like
         await updateDoc(comRef, { likes: increment(-1) });
         await setDoc(likeRef, { activo: false });
         btn.classList.remove('activo');
-        if (span) span.textContent = Math.max(0, parseInt(span.textContent) - 1);
       } else {
-        // Dar like
         await updateDoc(comRef, { likes: increment(1) });
         await setDoc(likeRef, { activo: true, uid, comId, epId });
         btn.classList.add('activo');
-        if (span) span.textContent = parseInt(span.textContent) + 1;
       }
-    } catch(e){ console.error(e); }
+
+      // Siempre leer el valor real de Firestore
+      const actualSnap = await getDoc(comRef);
+      const span = document.getElementById('lc-' + comId);
+      if (span && actualSnap.exists()) {
+        span.textContent = Math.max(0, actualSnap.data().likes || 0);
+      }
+    } catch(e) { console.error(e); }
   };
 
   function escapeHtml(str) {
