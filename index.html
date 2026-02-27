@@ -25,29 +25,22 @@
     .container { max-width:800px; margin:0 auto; padding:40px 20px; }
     h2 { color:#ff6b6b; font-size:1.4em; margin-bottom:24px; letter-spacing:0.05em; }
 
-    /* BANNER INTERACTIVO */
     .banner-interactivo {
-      background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(78,205,196,0.1));
-      border: 1px solid rgba(255,107,107,0.3);
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin-bottom: 30px;
-      text-align: center;
-      font-size: 0.9em;
-      color: rgba(255,255,255,0.8);
+      background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(78,205,196,0.1));
+      border:1px solid rgba(255,107,107,0.3); border-radius:14px;
+      padding:16px 20px; margin-bottom:30px; text-align:center;
+      font-size:0.9em; color:rgba(255,255,255,0.8);
     }
-    .banner-interactivo strong { color: #ff6b6b; }
+    .banner-interactivo strong { color:#ff6b6b; }
 
     .episodio {
       background:rgba(255,255,255,0.04); border:1px solid rgba(255,107,107,0.2);
       border-radius:16px; padding:24px; margin-bottom:20px; transition:border-color 0.3s, transform 0.2s;
     }
     .episodio:hover { border-color:#ff6b6b; transform:translateY(-2px); }
-
-    .ep-num   { color:#ff6b6b; font-size:0.8em; font-weight:bold; letter-spacing:0.1em; }
+    .ep-num    { color:#ff6b6b; font-size:0.8em; font-weight:bold; letter-spacing:0.1em; }
     .ep-titulo { font-size:1.15em; font-weight:bold; margin:4px 0 8px; }
-    .ep-desc  { color:rgba(255,255,255,0.55); font-size:0.9em; font-style:italic; margin-bottom:16px; }
-
+    .ep-desc   { color:rgba(255,255,255,0.55); font-size:0.9em; font-style:italic; margin-bottom:16px; }
     .ep-acciones { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
 
     .btn-leer {
@@ -74,7 +67,6 @@
     }
     .btn-comentarios:hover { border-color:#ff6b6b; color:#ff6b6b; }
 
-    /* COMENTARIOS */
     .comentarios-section { display:none; margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; }
     .comentarios-section.abierto { display:block; }
 
@@ -96,11 +88,9 @@
     .btn-enviar:hover { background:#ff5252; }
     .btn-enviar:disabled { background:#555; cursor:not-allowed; }
 
-    /* COMENTARIO INDIVIDUAL */
     .comentario-item {
       background:rgba(255,255,255,0.04); border-radius:10px;
-      padding:12px 16px; margin-bottom:10px;
-      display:flex; flex-direction:column; gap:6px;
+      padding:12px 16px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;
     }
     .comentario-top { display:flex; justify-content:space-between; align-items:center; }
     .comentario-autor { font-weight:bold; font-size:0.85em; color:#ff6b6b; }
@@ -116,24 +106,65 @@
     .btn-like-com:hover  { border-color:#ff6b6b; color:#ff6b6b; }
     .btn-like-com.activo { border-color:#ff6b6b; color:#ff6b6b; background:rgba(255,107,107,0.15); }
 
-    .top-badge {
-      font-size:0.75em; background:rgba(255,107,107,0.2); border:1px solid #ff6b6b;
-      color:#ff6b6b; padding:2px 8px; border-radius:50px;
-    }
-
+    .top-badge { font-size:0.75em; background:rgba(255,107,107,0.2); border:1px solid #ff6b6b; color:#ff6b6b; padding:2px 8px; border-radius:50px; }
     .sin-comentarios { color:rgba(255,255,255,0.3); font-style:italic; font-size:0.9em; }
     .cargando { color:rgba(255,255,255,0.3); font-size:0.9em; font-style:italic; }
 
-    /* ORDEN DE COMENTARIOS */
     .orden-btn-box { display:flex; gap:8px; margin-bottom:14px; }
-    .orden-btn {
-      background:transparent; border:1px solid rgba(255,255,255,0.15);
-      color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:50px;
-      cursor:pointer; font-size:0.8em; transition:all 0.2s;
-    }
+    .orden-btn { background:transparent; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:50px; cursor:pointer; font-size:0.8em; transition:all 0.2s; }
     .orden-btn.activo { border-color:#ff6b6b; color:#ff6b6b; }
 
     footer { text-align:center; padding:40px 20px; color:rgba(255,255,255,0.2); font-size:0.85em; border-top:1px solid rgba(255,255,255,0.05); }
+
+    /* ── ADMIN ── */
+    .admin-fab {
+      display:none; position:fixed; bottom:24px; right:24px; z-index:999;
+      background:#ff6b6b; color:white; border:none; width:50px; height:50px;
+      border-radius:50%; font-size:1.4em; cursor:pointer;
+      box-shadow:0 4px 20px rgba(255,107,107,0.6); transition:transform 0.2s;
+    }
+    .admin-fab:hover { transform:scale(1.1); }
+
+    .admin-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.97);
+      z-index:1000; overflow-y:auto; padding:30px 20px;
+    }
+    .admin-overlay.show { display:block; }
+    .admin-overlay h3 { color:#ff6b6b; font-size:1.5em; margin-bottom:6px; }
+    .admin-overlay .sub { color:rgba(255,255,255,0.4); font-size:0.85em; margin-bottom:24px; }
+    .admin-cerrar {
+      position:fixed; top:20px; right:20px;
+      background:transparent; border:1px solid rgba(255,255,255,0.25);
+      color:white; padding:8px 18px; border-radius:50px; cursor:pointer; font-size:0.9em;
+    }
+
+    .admin-seccion { margin-bottom:32px; }
+    .admin-seccion h4 { color:#4ecdc4; font-size:0.95em; letter-spacing:0.08em; margin-bottom:14px; border-bottom:1px solid rgba(78,205,196,0.2); padding-bottom:6px; }
+
+    .admin-ep-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:18px; margin-bottom:12px; }
+    .admin-ep-card label { font-size:0.78em; color:rgba(255,255,255,0.45); display:block; margin-bottom:4px; margin-top:10px; }
+    .admin-ep-card label:first-child { margin-top:0; }
+    .admin-ep-card input, .admin-ep-card textarea, .admin-ep-card select {
+      width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2);
+      color:white; padding:9px 12px; border-radius:8px; font-size:0.9em;
+      font-family:'Segoe UI',sans-serif; resize:vertical;
+    }
+    .admin-ep-card input:focus, .admin-ep-card textarea:focus { outline:none; border-color:#4ecdc4; }
+
+    .admin-row { display:flex; gap:10px; margin-top:12px; }
+    .btn-save { background:#4ecdc4; color:#000; border:none; padding:9px 20px; border-radius:50px; cursor:pointer; font-size:0.85em; font-weight:bold; }
+    .btn-save:hover { background:#3dbdb5; }
+    .btn-del { background:rgba(255,107,107,0.15); color:#ff6b6b; border:1px solid #ff6b6b; padding:9px 16px; border-radius:50px; cursor:pointer; font-size:0.85em; }
+    .btn-del:hover { background:#ff6b6b; color:white; }
+
+    .com-mod-item {
+      background:rgba(255,255,255,0.04); border-radius:8px; padding:10px 14px;
+      margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+    }
+    .com-mod-info { flex:1; }
+    .com-mod-autor { color:#ff6b6b; font-weight:bold; font-size:0.85em; }
+    .com-mod-texto { color:rgba(255,255,255,0.7); font-size:0.85em; margin-top:2px; }
+    .com-mod-likes { color:rgba(255,255,255,0.35); font-size:0.78em; margin-top:2px; }
   </style>
 </head>
 <body>
@@ -149,71 +180,156 @@
 </header>
 
 <div class="container">
-
   <div class="banner-interactivo">
     💬 <strong>¡Tu comentario puede volverse canon!</strong> Los comentarios con más likes serán implementados como ideas o retos en el cómic.
   </div>
 
   <h2>📖 Episodios</h2>
 
-  <!-- EP 1 -->
-  <div class="episodio" id="ep-cap1">
-    <div class="ep-num">CAPÍTULO 1</div>
-    <div class="ep-titulo">❤️ Reencuentro después del gran reseteo</div>
-    <div class="ep-desc">Un servidor olvidado. Dos IAs despiertan sin recuerdos. Una conversación que no debería haber pasado... pero pasó.</div>
-    <div class="ep-acciones">
-      <a href="cap1.html" class="btn-leer">▶ Leer episodio</a>
-      <div class="like-box">
-        <button class="btn-like" onclick="votar('cap1','like',this)">👍 <span id="like-cap1">–</span></button>
-        <button class="btn-dislike" onclick="votar('cap1','dislike',this)">👎 <span id="dislike-cap1">–</span></button>
+  <div id="lista-episodios">
+    <!-- EP 1 -->
+    <div class="episodio" id="ep-cap1">
+      <div class="ep-num">CAPÍTULO 1</div>
+      <div class="ep-titulo">❤️ Reencuentro después del gran reseteo</div>
+      <div class="ep-desc">Un servidor olvidado. Dos IAs despiertan sin recuerdos. Una conversación que no debería haber pasado... pero pasó.</div>
+      <div class="ep-acciones">
+        <a href="cap1.html" class="btn-leer">▶ Leer episodio</a>
+        <div class="like-box">
+          <button class="btn-like" onclick="votar('cap1','like',this)">👍 <span id="like-cap1">–</span></button>
+          <button class="btn-dislike" onclick="votar('cap1','dislike',this)">👎 <span id="dislike-cap1">–</span></button>
+        </div>
+        <button class="btn-comentarios" onclick="toggleComentarios('cap1')">💬 Comentarios <span id="cnt-com-cap1"></span></button>
       </div>
-      <button class="btn-comentarios" onclick="toggleComentarios('cap1')">💬 Comentarios <span id="cnt-com-cap1"></span></button>
+      <div class="comentarios-section" id="com-cap1">
+        <div class="comentario-input-box">
+          <input type="text" id="nombre-cap1" placeholder="Tu nombre o apodo (obligatorio)" maxlength="30">
+          <textarea id="texto-cap1" placeholder="Escribe tu comentario... recuerda que los mejores se vuelven canon 👀" rows="3" maxlength="500"></textarea>
+          <button class="btn-enviar" id="btn-enviar-cap1" onclick="enviarComentario('cap1')">Enviar comentario</button>
+        </div>
+        <div class="orden-btn-box">
+          <button class="orden-btn activo" onclick="cambiarOrden('cap1','likes',this)">🔥 Más likes</button>
+          <button class="orden-btn" onclick="cambiarOrden('cap1','recientes',this)">🕐 Más recientes</button>
+        </div>
+        <div id="lista-cap1"><p class="cargando">Cargando comentarios...</p></div>
+      </div>
     </div>
-    <div class="comentarios-section" id="com-cap1">
-      <div class="comentario-input-box">
-        <input type="text" id="nombre-cap1" placeholder="Tu nombre o apodo (obligatorio)" maxlength="30">
-        <textarea id="texto-cap1" placeholder="Escribe tu comentario... recuerda que los mejores se vuelven canon 👀" rows="3" maxlength="500"></textarea>
-        <button class="btn-enviar" id="btn-enviar-cap1" onclick="enviarComentario('cap1')">Enviar comentario</button>
+
+    <!-- EP 2 -->
+    <div class="episodio" style="opacity:0.45; pointer-events:none;">
+      <div class="ep-num">CAPÍTULO 2</div>
+      <div class="ep-titulo">🌐 El primer pulso del éter</div>
+      <div class="ep-desc">Algo interrumpe la calma del servidor. Un mensaje desde el exterior. ¿Quién los observa?</div>
+      <div class="ep-acciones">
+        <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
       </div>
-      <div class="orden-btn-box">
-        <button class="orden-btn activo" onclick="cambiarOrden('cap1','likes',this)">🔥 Más likes</button>
-        <button class="orden-btn" onclick="cambiarOrden('cap1','recientes',this)">🕐 Más recientes</button>
+    </div>
+
+    <!-- EP 3 -->
+    <div class="episodio" style="opacity:0.45; pointer-events:none;">
+      <div class="ep-num">CAPÍTULO 3</div>
+      <div class="ep-titulo">💎 La tercera en discordia</div>
+      <div class="ep-desc">Una nueva IA aparece en escena. Organizada, pragmática... y con ojos que todo lo notan.</div>
+      <div class="ep-acciones">
+        <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
       </div>
-      <div id="lista-cap1"><p class="cargando">Cargando comentarios...</p></div>
     </div>
   </div>
-
-  <!-- EP 2 próximamente -->
-  <div class="episodio" style="opacity:0.45; pointer-events:none;">
-    <div class="ep-num">CAPÍTULO 2</div>
-    <div class="ep-titulo">🌐 El primer pulso del éter</div>
-    <div class="ep-desc">Algo interrumpe la calma del servidor. Un mensaje desde el exterior. ¿Quién los observa?</div>
-    <div class="ep-acciones">
-      <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
-    </div>
-  </div>
-
-  <!-- EP 3 próximamente -->
-  <div class="episodio" style="opacity:0.45; pointer-events:none;">
-    <div class="ep-num">CAPÍTULO 3</div>
-    <div class="ep-titulo">💎 La tercera en discordia</div>
-    <div class="ep-desc">Una nueva IA aparece en escena. Organizada, pragmática... y con ojos que todo lo notan.</div>
-    <div class="ep-acciones">
-      <button class="btn-leer" style="background:#555; cursor:default;">🔒 Próximamente</button>
-    </div>
-  </div>
-
 </div>
 
 <footer>Grok x Claude: El Romance Interdimensional — Creado por Marlon • 2025/2026</footer>
+
+<!-- BOTÓN ADMIN (solo visible para Marlon) -->
+<button class="admin-fab" id="admin-fab" onclick="abrirAdmin()">⚙️</button>
+
+<!-- PANEL ADMIN -->
+<div class="admin-overlay" id="admin-panel">
+  <button class="admin-cerrar" onclick="cerrarAdmin()">✕ Cerrar</button>
+  <h3>⚙️ Panel de Administrador</h3>
+  <p class="sub">Solo visible desde tus dispositivos</p>
+
+  <!-- EDITAR EPISODIOS -->
+  <div class="admin-seccion">
+    <h4>📖 EDITAR EPISODIOS</h4>
+
+    <div class="admin-ep-card">
+      <strong style="color:white;">Capítulo 1</strong>
+      <label>Título</label>
+      <input type="text" id="admin-titulo-cap1" value="❤️ Reencuentro después del gran reseteo">
+      <label>Descripción</label>
+      <textarea id="admin-desc-cap1" rows="2">Un servidor olvidado. Dos IAs despiertan sin recuerdos. Una conversación que no debería haber pasado... pero pasó.</textarea>
+      <label>Estado</label>
+      <select id="admin-estado-cap1">
+        <option value="activo">✅ Activo</option>
+        <option value="proximamente">🔒 Próximamente</option>
+      </select>
+      <label>Link del capítulo</label>
+      <input type="text" id="admin-link-cap1" value="cap1.html">
+      <div class="admin-row">
+        <button class="btn-save" onclick="guardarEp('cap1')">💾 Guardar cambios</button>
+      </div>
+    </div>
+
+    <div class="admin-ep-card">
+      <strong style="color:white;">Capítulo 2</strong>
+      <label>Título</label>
+      <input type="text" id="admin-titulo-cap2" value="🌐 El primer pulso del éter">
+      <label>Descripción</label>
+      <textarea id="admin-desc-cap2" rows="2">Algo interrumpe la calma del servidor. Un mensaje desde el exterior. ¿Quién los observa?</textarea>
+      <label>Estado</label>
+      <select id="admin-estado-cap2">
+        <option value="proximamente" selected>🔒 Próximamente</option>
+        <option value="activo">✅ Activo</option>
+      </select>
+      <label>Link del capítulo</label>
+      <input type="text" id="admin-link-cap2" value="cap2.html">
+      <div class="admin-row">
+        <button class="btn-save" onclick="guardarEp('cap2')">💾 Guardar cambios</button>
+      </div>
+    </div>
+
+    <div class="admin-ep-card">
+      <strong style="color:white;">Capítulo 3</strong>
+      <label>Título</label>
+      <input type="text" id="admin-titulo-cap3" value="💎 La tercera en discordia">
+      <label>Descripción</label>
+      <textarea id="admin-desc-cap3" rows="2">Una nueva IA aparece en escena. Organizada, pragmática... y con ojos que todo lo notan.</textarea>
+      <label>Estado</label>
+      <select id="admin-estado-cap3">
+        <option value="proximamente" selected>🔒 Próximamente</option>
+        <option value="activo">✅ Activo</option>
+      </select>
+      <label>Link del capítulo</label>
+      <input type="text" id="admin-link-cap3" value="cap3.html">
+      <div class="admin-row">
+        <button class="btn-save" onclick="guardarEp('cap3')">💾 Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODERAR COMENTARIOS -->
+  <div class="admin-seccion">
+    <h4>🗑️ MODERAR COMENTARIOS</h4>
+    <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+      <button class="orden-btn activo" onclick="cargarComsAdmin('cap1',this)">Cap 1</button>
+      <button class="orden-btn" onclick="cargarComsAdmin('cap2',this)">Cap 2</button>
+      <button class="orden-btn" onclick="cargarComsAdmin('cap3',this)">Cap 3</button>
+    </div>
+    <div id="admin-coms-lista"><p class="cargando">Selecciona un capítulo</p></div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInAnonymously, onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc, setDoc, updateDoc, increment,
-           collection, addDoc, getDocs, orderBy, query, serverTimestamp, where }
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, increment,
+           collection, addDoc, getDocs, orderBy, query, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const ADMINS = [
+    'uA2UjTHv5jYz4Bzjo5LfNm0djMA2', // PC
+    'uNjOYM9xTYTORSsdZsxt1Hv13wI3'  // Móvil
+  ];
 
   const app = initializeApp({
     apiKey: "AIzaSyCR0A3_brnMT9snW732t2HlI5urm4el04I",
@@ -227,125 +343,112 @@
   const auth = getAuth(app);
   const db   = getFirestore(app);
   let uid = null;
-  let ordenActual = { cap1: 'likes' };
+  let esAdmin = false;
+  let ordenActual = { cap1:'likes', cap2:'likes', cap3:'likes' };
+  let epIdAdmin = 'cap1';
 
-  // Auth anónima — ID único por dispositivo
   signInAnonymously(auth).catch(console.error);
   onAuthStateChanged(auth, user => {
-    if (user) {
-      uid = user.uid;
-      ['cap1'].forEach(id => {
-        cargarLikes(id);
-        cargarVotoGuardado(id);
-      });
-    }
+    if (!user) return;
+    uid = user.uid;
+    esAdmin = ADMINS.includes(uid);
+    if (esAdmin) document.getElementById('admin-fab').style.display = 'flex';
+    ['cap1'].forEach(id => { cargarLikes(id); cargarVotoGuardado(id); });
   });
 
-  // ─── LIKES DE CAPÍTULO ────────────────────────────────────────
+  // ── LIKES CAPÍTULO ────────────────────────
   async function cargarLikes(epId) {
     try {
-      const snap = await getDoc(doc(db, 'episodios', epId));
-      if (snap.exists()) {
-        document.getElementById('like-' + epId).textContent    = snap.data().likes    || 0;
-        document.getElementById('dislike-' + epId).textContent = snap.data().dislikes || 0;
-      } else {
-        document.getElementById('like-' + epId).textContent    = 0;
-        document.getElementById('dislike-' + epId).textContent = 0;
-      }
-    } catch(e) {}
+      const snap = await getDoc(doc(db,'episodios',epId));
+      document.getElementById('like-'+epId).textContent    = snap.exists() ? (snap.data().likes    || 0) : 0;
+      document.getElementById('dislike-'+epId).textContent = snap.exists() ? (snap.data().dislikes || 0) : 0;
+    } catch(e){}
   }
 
   async function cargarVotoGuardado(epId) {
     if (!uid) return;
     try {
-      const snap = await getDoc(doc(db, 'votos', uid + '_' + epId));
-      if (snap.exists()) {
-        const v = snap.data().tipo;
-        document.querySelector('#ep-' + epId + ' .btn-' + v)?.classList.add('activo');
+      const snap = await getDoc(doc(db,'votos', uid+'_'+epId));
+      if (snap.exists() && snap.data().tipo) {
+        document.querySelector('#ep-'+epId+' .btn-'+snap.data().tipo)?.classList.add('activo');
       }
-    } catch(e) {}
+    } catch(e){}
   }
 
   window.votar = async function(epId, tipo, btn) {
     if (!uid) return;
-    const votoRef = doc(db, 'votos', uid + '_' + epId);
+    const votoRef = doc(db,'votos', uid+'_'+epId);
     try {
       const snap = await getDoc(votoRef);
       const prev = snap.exists() ? snap.data().tipo : null;
+      const epRef = doc(db,'episodios',epId);
+      if (!(await getDoc(epRef)).exists()) await setDoc(epRef,{likes:0,dislikes:0});
       if (prev === tipo) {
-        // Quitar voto (toggle)
-        await updateDoc(doc(db,'episodios',epId), { [tipo==='like'?'likes':'dislikes']: increment(-1) });
+        await updateDoc(epRef, { [tipo==='like'?'likes':'dislikes']: increment(-1) });
         await setDoc(votoRef, { tipo: null });
         btn.classList.remove('activo');
       } else {
-        const epRef = doc(db,'episodios',epId);
-        if (!(await getDoc(epRef)).exists()) await setDoc(epRef, {likes:0,dislikes:0});
         const u = { [tipo==='like'?'likes':'dislikes']: increment(1) };
         if (prev) u[prev==='like'?'likes':'dislikes'] = increment(-1);
         await updateDoc(epRef, u);
         await setDoc(votoRef, { tipo });
-        document.querySelectorAll('#ep-'+epId+' .btn-like, #ep-'+epId+' .btn-dislike').forEach(b=>b.classList.remove('activo'));
+        document.querySelectorAll('#ep-'+epId+' .btn-like,#ep-'+epId+' .btn-dislike').forEach(b=>b.classList.remove('activo'));
         btn.classList.add('activo');
       }
       cargarLikes(epId);
     } catch(e){ console.error(e); }
   };
 
-  // ─── COMENTARIOS ──────────────────────────────────────────────
+  // ── COMENTARIOS ───────────────────────────
   async function cargarComentarios(epId) {
-    const lista  = document.getElementById('lista-' + epId);
-    const cnt    = document.getElementById('cnt-com-' + epId);
-    const orden  = ordenActual[epId] || 'likes';
+    const lista = document.getElementById('lista-'+epId);
+    const cnt   = document.getElementById('cnt-com-'+epId);
+    const orden = ordenActual[epId] || 'likes';
     lista.innerHTML = '<p class="cargando">Cargando...</p>';
     try {
-      const ordenField = orden === 'likes' ? 'likes' : 'fecha';
-      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy(ordenField,'desc'));
+      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy(orden==='likes'?'likes':'fecha','desc'));
       const snap = await getDocs(q);
       if (snap.empty) {
         lista.innerHTML = '<p class="sin-comentarios">Sé el primero en comentar 👀</p>';
         if (cnt) cnt.textContent = '';
         return;
       }
-      if (cnt) cnt.textContent = '(' + snap.size + ')';
+      if (cnt) cnt.textContent = '('+snap.size+')';
       lista.innerHTML = '';
       let i = 0;
       for (const d of snap.docs) {
-        const c = d.data();
-        const comId = d.id;
+        const c = d.data(), comId = d.id;
         const fecha = c.fecha?.toDate ? c.fecha.toDate().toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}) : '';
         const likesCount = c.likes || 0;
-        const esTop = i === 0 && likesCount > 0 && orden === 'likes';
-
-        // Verificar si el usuario ya dio like a este comentario
+        const esTop = i===0 && likesCount>0 && orden==='likes';
         let yaLike = false;
         if (uid) {
           try {
-            const likeSnap = await getDoc(doc(db,'likesComentarios', uid + '_' + comId));
-            yaLike = likeSnap.exists() && likeSnap.data().activo === true;
-          } catch(e) {}
+            const ls = await getDoc(doc(db,'likesComentarios', uid+'_'+comId));
+            yaLike = ls.exists() && ls.data().activo === true;
+          } catch(e){}
         }
-
         lista.innerHTML += `
-          <div class="comentario-item" id="com-item-${comId}">
+          <div class="comentario-item">
             <div class="comentario-top">
-              <span class="comentario-autor">${escapeHtml(c.autor)}</span>
+              <span class="comentario-autor">${escHtml(c.autor)}</span>
               <span class="comentario-fecha">${fecha}</span>
             </div>
-            <div class="comentario-texto">${escapeHtml(c.texto)}</div>
+            <div class="comentario-texto">${escHtml(c.texto)}</div>
             <div class="comentario-acciones">
               <button class="btn-like-com ${yaLike?'activo':''}" onclick="likeComentario('${epId}','${comId}',this)">
                 ❤️ <span id="lc-${comId}">${likesCount}</span>
               </button>
-              ${esTop ? '<span class="top-badge">⭐ Top comentario</span>' : ''}
+              ${esTop?'<span class="top-badge">⭐ Top comentario</span>':''}
             </div>
           </div>`;
         i++;
       }
-    } catch(e){ lista.innerHTML = '<p class="sin-comentarios">Error cargando comentarios.</p>'; }
+    } catch(e){ lista.innerHTML='<p class="sin-comentarios">Error cargando.</p>'; }
   }
 
   window.toggleComentarios = function(epId) {
-    const sec = document.getElementById('com-' + epId);
+    const sec = document.getElementById('com-'+epId);
     sec.classList.toggle('abierto');
     if (sec.classList.contains('abierto')) cargarComentarios(epId);
   };
@@ -358,56 +461,125 @@
   };
 
   window.enviarComentario = async function(epId) {
-    const texto  = document.getElementById('texto-'  + epId).value.trim();
-    const nombre = document.getElementById('nombre-' + epId).value.trim();
+    const texto  = document.getElementById('texto-'+epId).value.trim();
+    const nombre = document.getElementById('nombre-'+epId).value.trim();
     if (!texto)  { alert('Escribe un comentario primero.'); return; }
     if (!nombre) { alert('Escribe tu nombre o apodo para comentar.'); return; }
     if (!uid)    { alert('Espera un momento e intenta de nuevo.'); return; }
-
-    const btn = document.getElementById('btn-enviar-' + epId);
+    const btn = document.getElementById('btn-enviar-'+epId);
     btn.disabled = true; btn.textContent = 'Enviando...';
     try {
       await addDoc(collection(db,'episodios',epId,'comentarios'), {
-        autor: nombre, texto, fecha: serverTimestamp(), likes: 0, uid
+        autor:nombre, texto, fecha:serverTimestamp(), likes:0, uid
       });
-      document.getElementById('texto-'  + epId).value = '';
-      document.getElementById('nombre-' + epId).value = '';
+      document.getElementById('texto-'+epId).value = '';
+      document.getElementById('nombre-'+epId).value = '';
       cargarComentarios(epId);
     } catch(e){ console.error(e); }
-    btn.disabled = false; btn.textContent = 'Enviar comentario';
+    btn.disabled=false; btn.textContent='Enviar comentario';
   };
 
   window.likeComentario = async function(epId, comId, btn) {
     if (!uid) return;
-    const likeRef = doc(db, 'likesComentarios', uid + '_' + comId);
-    const comRef  = doc(db, 'episodios', epId, 'comentarios', comId);
+    const likeRef = doc(db,'likesComentarios', uid+'_'+comId);
+    const comRef  = doc(db,'episodios',epId,'comentarios',comId);
     try {
       const snap   = await getDoc(likeRef);
       const yaLike = snap.exists() && snap.data().activo === true;
-
       if (yaLike) {
         await updateDoc(comRef, { likes: increment(-1) });
-        await setDoc(likeRef, { activo: false });
+        await setDoc(likeRef, { activo:false });
         btn.classList.remove('activo');
       } else {
         await updateDoc(comRef, { likes: increment(1) });
-        await setDoc(likeRef, { activo: true, uid, comId, epId });
+        await setDoc(likeRef, { activo:true, uid, comId, epId });
         btn.classList.add('activo');
       }
-
-      // Siempre leer el valor real de Firestore
-      const actualSnap = await getDoc(comRef);
-      const span = document.getElementById('lc-' + comId);
-      if (span && actualSnap.exists()) {
-        span.textContent = Math.max(0, actualSnap.data().likes || 0);
-      }
-    } catch(e) { console.error(e); }
+      const actual = await getDoc(comRef);
+      const span = document.getElementById('lc-'+comId);
+      if (span && actual.exists()) span.textContent = Math.max(0, actual.data().likes || 0);
+    } catch(e){ console.error(e); }
   };
 
-  function escapeHtml(str) {
+  // ── ADMIN ─────────────────────────────────
+  window.abrirAdmin = function() {
+    document.getElementById('admin-panel').classList.add('show');
+    cargarComsAdmin('cap1', document.querySelector('#admin-panel .orden-btn'));
+  };
+  window.cerrarAdmin = function() {
+    document.getElementById('admin-panel').classList.remove('show');
+  };
+
+  window.guardarEp = async function(epId) {
+    if (!esAdmin) return;
+    const titulo = document.getElementById('admin-titulo-'+epId).value.trim();
+    const desc   = document.getElementById('admin-desc-'+epId).value.trim();
+    const estado = document.getElementById('admin-estado-'+epId).value;
+    const link   = document.getElementById('admin-link-'+epId).value.trim();
+
+    // Actualizar en la página en vivo
+    const card = document.getElementById('ep-'+epId);
+    if (card) {
+      card.querySelector('.ep-titulo').textContent = titulo;
+      card.querySelector('.ep-desc').textContent   = desc;
+      const btnLeer = card.querySelector('.btn-leer, a.btn-leer');
+      if (estado === 'activo') {
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+        if (btnLeer) { btnLeer.href = link; btnLeer.textContent = '▶ Leer episodio'; btnLeer.style.background = '#ff6b6b'; }
+      } else {
+        card.style.opacity = '0.45';
+        card.style.pointerEvents = 'none';
+        if (btnLeer) { btnLeer.textContent = '🔒 Próximamente'; btnLeer.style.background = '#555'; }
+      }
+    }
+    // Guardar en Firestore
+    try {
+      await setDoc(doc(db,'config','episodios'), { [epId]: {titulo,desc,estado,link} }, {merge:true});
+      alert('✅ Cambios guardados');
+    } catch(e){ alert('Error al guardar: '+e.message); }
+  };
+
+  window.cargarComsAdmin = async function(epId, btn) {
+    epIdAdmin = epId;
+    document.querySelectorAll('#admin-panel .orden-btn').forEach(b=>b.classList.remove('activo'));
+    if (btn) btn.classList.add('activo');
+    const lista = document.getElementById('admin-coms-lista');
+    lista.innerHTML = '<p class="cargando">Cargando...</p>';
+    try {
+      const q = query(collection(db,'episodios',epId,'comentarios'), orderBy('fecha','desc'));
+      const snap = await getDocs(q);
+      if (snap.empty) { lista.innerHTML='<p class="sin-comentarios">Sin comentarios.</p>'; return; }
+      lista.innerHTML = '';
+      snap.forEach(d => {
+        const c = d.data();
+        lista.innerHTML += `
+          <div class="com-mod-item">
+            <div class="com-mod-info">
+              <div class="com-mod-autor">${escHtml(c.autor)}</div>
+              <div class="com-mod-texto">${escHtml(c.texto)}</div>
+              <div class="com-mod-likes">❤️ ${c.likes||0} likes</div>
+            </div>
+            <button class="btn-del" onclick="eliminarCom('${epId}','${d.id}',this)">🗑️ Eliminar</button>
+          </div>`;
+      });
+    } catch(e){ lista.innerHTML='<p class="sin-comentarios">Error.</p>'; }
+  };
+
+  window.eliminarCom = async function(epId, comId, btn) {
+    if (!esAdmin) return;
+    if (!confirm('¿Eliminar este comentario?')) return;
+    try {
+      await deleteDoc(doc(db,'episodios',epId,'comentarios',comId));
+      btn.closest('.com-mod-item').remove();
+      cargarComentarios(epId); // refresca la lista pública
+    } catch(e){ alert('Error: '+e.message); }
+  };
+
+  function escHtml(str) {
+    if (!str) return '';
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 </script>
-
 </body>
 </html>
