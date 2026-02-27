@@ -321,7 +321,7 @@
         if (uid) {
           try {
             const likeSnap = await getDoc(doc(db,'likesComentarios', uid + '_' + comId));
-            yaLike = likeSnap.exists();
+            yaLike = likeSnap.exists() && likeSnap.data().activo === true;
           } catch(e) {}
         }
 
@@ -383,20 +383,19 @@
     const comRef  = doc(db,'episodios',epId,'comentarios',comId);
     try {
       const snap = await getDoc(likeRef);
-      if (snap.exists()) {
+      const yaLike = snap.exists() && snap.data().activo === true;
+      const span = document.getElementById('lc-' + comId);
+      if (yaLike) {
         // Quitar like
         await updateDoc(comRef, { likes: increment(-1) });
-        await setDoc(likeRef, { activo: false }); // marcamos como quitado
+        await setDoc(likeRef, { activo: false });
         btn.classList.remove('activo');
-        const span = document.getElementById('lc-' + comId);
         if (span) span.textContent = Math.max(0, parseInt(span.textContent) - 1);
-        // Borrar doc de like para poder dar like de nuevo
-        await setDoc(likeRef, {});
       } else {
+        // Dar like
         await updateDoc(comRef, { likes: increment(1) });
-        await setDoc(likeRef, { uid, comId, epId });
+        await setDoc(likeRef, { activo: true, uid, comId, epId });
         btn.classList.add('activo');
-        const span = document.getElementById('lc-' + comId);
         if (span) span.textContent = parseInt(span.textContent) + 1;
       }
     } catch(e){ console.error(e); }
